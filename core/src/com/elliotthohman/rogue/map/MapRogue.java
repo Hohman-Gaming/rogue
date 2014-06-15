@@ -11,6 +11,9 @@ public class MapRogue {
 	protected ChunkGenerator chunkGenerator = new ChunkGenerator();
 	public Vector2 pos = new Vector2(0, MapChunk.CHUNK_DY/2);
 	protected InputHandler inputHandler = new InputHandler(this);
+	public Dude dude = new Dude(0, 260);
+	
+	
 	
 	public MapRogue() {
 		
@@ -25,6 +28,10 @@ public class MapRogue {
 
 	public void update() {
 		inputHandler.handleInput();
+		
+		dude.update();
+		
+		
 	}
 	
 	

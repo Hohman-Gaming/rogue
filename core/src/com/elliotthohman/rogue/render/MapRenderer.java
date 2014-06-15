@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.elliotthohman.rogue.map.MapChunk;
 import com.elliotthohman.rogue.map.MapRogue;
 import com.elliotthohman.rogue.map.TileCodes;
@@ -21,7 +23,6 @@ public class MapRenderer {
 	private BitmapFont font = new BitmapFont();
 	public static float SCREEN_TILE_WIDTH = 64f;
 	public static float SCREEN_TILE_HEIGHT = 48f;
-
 	
 	public MapRenderer(MapRogue map) {
 		this.map = map;
@@ -38,6 +39,10 @@ public class MapRenderer {
 	}
 	
 	public void createAnimations() {
+		
+		
+		
+		
 	}
 	
 	public void render(float deltaTime) {
@@ -73,6 +78,8 @@ public class MapRenderer {
 		
 //		font.draw(batch, "Left Chunk: " + map.getChunkAtPosition(leftX).id, leftX+1, SCREEN_TILE_HEIGHT-1);
 //		font.draw(batch, "Left Chunk: " + map.getChunkAtPosition(leftX).id, 0,32);
+		
+		map.dude.render(batch ,deltaTime );
 		
 		batch.end();
 
