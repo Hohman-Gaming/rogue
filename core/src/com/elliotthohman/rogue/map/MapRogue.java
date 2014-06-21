@@ -9,7 +9,6 @@ public class MapRogue {
 
 	protected Map<Integer, MapChunk> chunkId2Chunk = new HashMap<Integer, MapChunk>();
 	protected ChunkGenerator chunkGenerator = new ChunkGenerator();
-	public Vector2 pos = new Vector2(0, MapChunk.CHUNK_DY/2);
 	protected InputHandler inputHandler = new InputHandler(this);
 	public Dude dude = new Dude(0, 260);
 	
@@ -26,10 +25,11 @@ public class MapRogue {
 		}
 	}
 
-	public void update() {
+	public void update(float delta) {
+
 		inputHandler.handleInput();
-		
-		dude.update();
+
+		dude.update(this, delta);
 		
 		
 	}
@@ -41,6 +41,15 @@ public class MapRogue {
 	
 	public int getMapHeight() {
 		return MapChunk.CHUNK_DY;
+	}
+	
+	public byte getTileAtPosition(float x, float y) {
+		int chunkId = (int)Math.floor((double)(x / MapChunk.CHUNK_DX));
+		MapChunk chunk = chunkId2Chunk.get(chunkId);
+		int tx, ty;
+		ty = (int)Math.floor(y);
+		tx = (int)Math.floor(x - (float)chunkId*(float)MapChunk.CHUNK_DX); 
+		return chunk.tiles[tx][ty];
 	}
 	
 	public MapChunk getChunkAtPosition(float x) {

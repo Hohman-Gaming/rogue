@@ -22,7 +22,7 @@ public class GameScreen extends RogueScreen {
 
 	@Override
 	public void render(float delta) {
-		map.update();
+		map.update(delta);
 		renderer.render(delta);
 	}
 

@@ -48,16 +48,16 @@ public class MapRenderer {
 	public void render(float deltaTime) {
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 		
-		this.cam.position.set(map.pos.x, map.pos.y, 0);
+		this.cam.position.set(map.dude.pos.x, map.dude.pos.y, 0);
 		this.cam.update();
 		
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 
-		float leftX = map.pos.x - MapRenderer.SCREEN_TILE_WIDTH/2;
-		float rightX = map.pos.x + MapRenderer.SCREEN_TILE_WIDTH/2;
-		float bottomY = map.pos.y - MapRenderer.SCREEN_TILE_HEIGHT/2;
-		float topY = map.pos.y + MapRenderer.SCREEN_TILE_HEIGHT/2;
+		float leftX = map.dude.pos.x - MapRenderer.SCREEN_TILE_WIDTH/2;
+		float rightX = map.dude.pos.x + MapRenderer.SCREEN_TILE_WIDTH/2;
+		float bottomY = map.dude.pos.y - MapRenderer.SCREEN_TILE_HEIGHT/2;
+		float topY = map.dude.pos.y + MapRenderer.SCREEN_TILE_HEIGHT/2;
 		
 		int leftChunk = (int)Math.floor((double)leftX/MapChunk.CHUNK_DX);
 		int rightChunk = (int)Math.ceil((double)rightX/MapChunk.CHUNK_DX);

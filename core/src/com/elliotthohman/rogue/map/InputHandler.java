@@ -12,17 +12,21 @@ public class InputHandler {
 	}
 	
 	public void handleInput() {
+		map.dude.accel.x = 0;  // no acceleration except from keys
 		if (Gdx.input.isKeyPressed(Keys.D)) {
-			map.pos.x += .2;
+			map.dude.accel.x = 5.0f;
 		} 
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			map.pos.x -= .2;
+			map.dude.accel.x = -5.0f;
 		} 
-		if (Gdx.input.isKeyPressed(Keys.W)) {
-			map.pos.y -= .2;
-		} 
-		if (Gdx.input.isKeyPressed(Keys.S)) {
-			map.pos.y += .2;
+//		if (Gdx.input.isKeyPressed(Keys.W)) {
+//			map.dude.vel.y -= .2;
+//		} 
+//		if (Gdx.input.isKeyPressed(Keys.S)) {
+//			map.dude.vel.y += .2;
+//		} 
+		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			map.dude.vel.y += 8.0f;
 		} 
 	}
 }
