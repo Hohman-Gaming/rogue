@@ -3,14 +3,12 @@ package com.elliotthohman.rogue.map;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.math.Vector2;
-
 public class MapRogue {
 
 	protected Map<Integer, MapChunk> chunkId2Chunk = new HashMap<Integer, MapChunk>();
 	protected ChunkGenerator chunkGenerator = new ChunkGenerator();
 	protected InputHandler inputHandler = new InputHandler(this);
-	public Dude dude = new Dude(0, 260);
+	public Dude dude = new Dude(this, 0, 260);
 	
 	
 	
@@ -29,7 +27,7 @@ public class MapRogue {
 
 		inputHandler.handleInput();
 
-		dude.update(this, delta);
+		dude.update(delta);
 		
 		
 	}

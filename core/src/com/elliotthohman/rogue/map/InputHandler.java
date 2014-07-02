@@ -12,12 +12,11 @@ public class InputHandler {
 	}
 	
 	public void handleInput() {
-		map.dude.accel.x = 0;  // no acceleration except from keys
 		if (Gdx.input.isKeyPressed(Keys.D)) {
-			map.dude.accel.x = 5.0f;
+			map.dude.vel.x = 5.0f;
 		} 
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			map.dude.accel.x = -5.0f;
+			map.dude.vel.x = -5.0f;
 		} 
 //		if (Gdx.input.isKeyPressed(Keys.W)) {
 //			map.dude.vel.y -= .2;
@@ -26,7 +25,14 @@ public class InputHandler {
 //			map.dude.vel.y += .2;
 //		} 
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			map.dude.vel.y += 8.0f;
+			
+			if (map.dude.isStandingOnSolid()){
+				
+				map.dude.vel.y = Constants.JUMP_Y_ACCEL;	
+				
+			}
+			
+			
 		} 
 	}
 }

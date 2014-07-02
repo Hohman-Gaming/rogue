@@ -83,7 +83,7 @@ public class MapRenderer {
 		
 		batch.end();
 
-		fps.log();
+//		fps.log();
 	}
 	
 }
