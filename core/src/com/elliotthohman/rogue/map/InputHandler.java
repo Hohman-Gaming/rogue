@@ -2,6 +2,7 @@ package com.elliotthohman.rogue.map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.elliotthohman.rogue.Constants;
 
 public class InputHandler {
 

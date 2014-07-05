@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.elliotthohman.rogue.Constants;
 
 public class Dude {
 	
@@ -63,12 +64,7 @@ public class Dude {
 
 		return false;
 	}
-	
-	
-	
-	
-	
-	
+
 	public void update (float delta) {
 
 		// use acceleration to update velocity

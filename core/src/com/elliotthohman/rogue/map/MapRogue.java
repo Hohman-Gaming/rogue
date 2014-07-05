@@ -2,27 +2,42 @@ package com.elliotthohman.rogue.map;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import com.elliotthohman.rogue.map.biome.Biome;
 
 public class MapRogue {
 
 	protected Map<Integer, MapChunk> chunkId2Chunk = new HashMap<Integer, MapChunk>();
-	protected ChunkGenerator chunkGenerator = new ChunkGenerator();
 	protected InputHandler inputHandler = new InputHandler(this);
 	public Dude dude = new Dude(this, 0, 260);
+	protected Random random = new Random();
 	
-	
-	
-	public MapRogue() {
-		
-		// init with first 20 chunks in either direction
-		MapChunk lastChunk = null;
-		for(int i=-10;i<=10;i++) {
-			chunkId2Chunk.put(i, chunkGenerator.generate(lastChunk, null));
-			lastChunk = chunkId2Chunk.get(i);
-			lastChunk.id = i;
-		}
+	public MapRogue(long seed) {
+		random.setSeed(seed);
+		worldGen();
 	}
 
+	protected void worldGen() {
+		// init with first 20 chunks in either direction
+		MapChunk leftChunk = null;
+		for(int i=-10;i<=10;i++) {
+			
+			// randomly get a biome...
+			Biome biome = Biome.getRandomBiome(random);
+
+			// ask the biome to generate a chunk
+			MapChunk chunk = biome.generateChunk(leftChunk);
+
+			// store it...
+			chunkId2Chunk.put(i, chunk);
+			
+			// keep a pointer to the chunk on the left...
+			leftChunk = chunkId2Chunk.get(i);
+			leftChunk.id = i;
+		}
+	}
+	
 	public void update(float delta) {
 
 		inputHandler.handleInput();
@@ -31,8 +46,7 @@ public class MapRogue {
 		
 		
 	}
-	
-	
+
 	public int getMapWidth() {
 		return chunkId2Chunk.size() * MapChunk.CHUNK_DX;
 	}

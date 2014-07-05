@@ -15,7 +15,7 @@ public class GameScreen extends RogueScreen {
 
 	@Override
 	public void show () {
-		map = new MapRogue();
+		map = new MapRogue(1000);
 		renderer = new MapRenderer(map);
 //		controlRenderer = new OnscreenControlRenderer(map);
 	}
