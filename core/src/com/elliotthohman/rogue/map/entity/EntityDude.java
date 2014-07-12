@@ -1,4 +1,4 @@
-package com.elliotthohman.rogue.map;
+package com.elliotthohman.rogue.map.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,18 +8,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.elliotthohman.rogue.Constants;
+import com.elliotthohman.rogue.map.MapRogue;
+import com.elliotthohman.rogue.map.TileCodes;
 
-public class Dude {
+public class EntityDude extends EntityBase {
 	
 	public static final float DUDES_MAX_VELOCITY_Y = 30.0f;
 	public static final float DUDES_MIN_VELOCITY_Y = -30.0f;
-	public static final float DUDES_MAX_VELOCITY_X = 15.0f;
-	public static final float DUDES_MIN_VELOCITY_X = -15.0f;
+	public static final float DUDES_MAX_VELOCITY_X = 50.0f;
+	public static final float DUDES_MIN_VELOCITY_X = -50.0f;
 	public static final float MIN_DELTA = 0.001f;
 	public static final int FACING_LEFT = 0; 
 	public static final int FACING_RIGHT = 1; 
 	
-	public Vector2 pos=new Vector2();
 	public Vector2 vel=new Vector2(0,0);  // x=dx, y=dy
 	public Vector2 accel=new Vector2(0, Constants.GRAVITY_DY); // gravity always accelerating us down...
 	public Rectangle bounds = new Rectangle();
@@ -27,12 +28,9 @@ public class Dude {
 	
 	
 	private Animation walkleft,walkright;
-	private MapRogue map;
-	private float stateTime = 0;
-	
 
-
-	public Dude (MapRogue map, float x , float y ) { 
+	public EntityDude (MapRogue map, float x , float y) { 
+		super(map, x, y, EntityBase.RENDER_PRIORITY_FOREGROUND);
 		Texture defaultTexture = new Texture(Gdx.files.internal("dude.png"));
 	
 		TextureRegion[] split = new TextureRegion(defaultTexture).split(20, 20)[0];
@@ -43,11 +41,6 @@ public class Dude {
 		walkleft = new Animation(0.25f,mirror[0], mirror[1]);
 		
 		walkright = new Animation(0.25f,split[0], split[1]);
-		
-		pos.x = x;
-		pos.y = y;
-		
-		this.map = map;
 		
 		bounds.x = pos.x;
 		bounds.y = pos.y;
@@ -65,6 +58,7 @@ public class Dude {
 		return false;
 	}
 
+	@Override
 	public void update (float delta) {
 
 		// use acceleration to update velocity
@@ -136,9 +130,10 @@ public class Dude {
 		
 	}
 
+	@Override
 	public void render (SpriteBatch batch, float deltaTime) {
-		
-		stateTime = stateTime + deltaTime;
+
+		super.render(batch, deltaTime);
 		
 		if (vel.x > 0)
 			directionFacing = FACING_RIGHT;

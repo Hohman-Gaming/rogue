@@ -4,14 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.elliotthohman.rogue.map.MapChunk;
 import com.elliotthohman.rogue.map.MapRogue;
 import com.elliotthohman.rogue.map.TileCodes;
+import com.elliotthohman.rogue.map.entity.EntityBase;
 
 public class MapRenderer {
 
@@ -67,19 +66,21 @@ public class MapRenderer {
 			
 			for(int x=0;x<MapChunk.CHUNK_DX;x++) {
 				for(int y=(int)bottomY;y<=topY;y++) {
+					byte tileCode = chunk.tiles[x][y];
 					batch.draw(
-							TileCodes.tileTextures[chunk.tiles[x][y]],
-							chunkId*MapChunk.CHUNK_DX+x,
-							y, 1, 1);
+							TileCodes.tileTextures[tileCode],
+							chunk.getWorldCoordinateLeftSideOfChunk()+x,
+							y, TileCodes.tileInfos[tileCode].tile_dx, TileCodes.tileInfos[tileCode].tile_dy);
 				}
 			}
 			
 		}
 		
-//		font.draw(batch, "Left Chunk: " + map.getChunkAtPosition(leftX).id, leftX+1, SCREEN_TILE_HEIGHT-1);
-//		font.draw(batch, "Left Chunk: " + map.getChunkAtPosition(leftX).id, 0,32);
-		
-		map.dude.render(batch ,deltaTime );
+		// render objects, layer by layer
+		for(byte priority=EntityBase.RENDER_PRIORITY_BACKGROUND; priority >= EntityBase.RENDER_PRIORITY_FOREGROUND; priority--)
+			for(EntityBase entity : map.getWorldEntities())
+				if (entity.getRenderPriority() == priority)
+					entity.render(batch, deltaTime);
 		
 		batch.end();
 

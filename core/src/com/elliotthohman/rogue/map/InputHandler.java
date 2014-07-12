@@ -14,10 +14,10 @@ public class InputHandler {
 	
 	public void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.D)) {
-			map.dude.vel.x = 5.0f;
+			map.dude.vel.x += 5.0f;
 		} 
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			map.dude.vel.x = -5.0f;
+			map.dude.vel.x += -5.0f;
 		} 
 //		if (Gdx.input.isKeyPressed(Keys.W)) {
 //			map.dude.vel.y -= .2;

@@ -8,10 +8,12 @@ public class Constants {
 	
 	
 	// BIOME IDs
-	public static int BIOME_ID_FOREST = 1;
-	public static int BIOME_ID_JUNGLE = 2;
+	public static int BIOME_ID_PLAIN = 1;
+	public static int BIOME_ID_FOREST = 2;
+	public static int BIOME_ID_JUNGLE = 3;
 	
 	// BIOME TYPE NAMES
+	public static String BIOME_NAME_PLAIN = "plain";
 	public static String BIOME_NAME_FOREST = "forest";
 	public static String BIOME_NAME_JUNGLE = "jungle";
 }

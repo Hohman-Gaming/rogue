@@ -1,33 +1,42 @@
 package com.elliotthohman.rogue.map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import com.elliotthohman.rogue.map.biome.Biome;
+import com.elliotthohman.rogue.map.entity.EntityBase;
+import com.elliotthohman.rogue.map.entity.EntityDude;
 
 public class MapRogue {
 
 	protected Map<Integer, MapChunk> chunkId2Chunk = new HashMap<Integer, MapChunk>();
 	protected InputHandler inputHandler = new InputHandler(this);
-	public Dude dude = new Dude(this, 0, 260);
+	protected List<EntityBase> worldEntities = new ArrayList<EntityBase>();
+	public EntityDude dude = null;
 	protected Random random = new Random();
+
+	public static int MAX_MAP_CHUNK_X = 100;
 	
 	public MapRogue(long seed) {
 		random.setSeed(seed);
+		dude = new EntityDude(this, 0, 260);
+		worldEntities.add(dude);
 		worldGen();
 	}
 
 	protected void worldGen() {
 		// init with first 20 chunks in either direction
 		MapChunk leftChunk = null;
-		for(int i=-10;i<=10;i++) {
+		for(int i=-(MAX_MAP_CHUNK_X/2);i<=(MAX_MAP_CHUNK_X/2);i++) {
 			
 			// randomly get a biome...
-			Biome biome = Biome.getRandomBiome(random);
+			Biome biome = Biome.getRandomBiome(leftChunk, random);
 
 			// ask the biome to generate a chunk
-			MapChunk chunk = biome.generateChunk(leftChunk);
+			MapChunk chunk = biome.generateChunk(i, this, leftChunk, random);
 
 			// store it...
 			chunkId2Chunk.put(i, chunk);
@@ -38,13 +47,28 @@ public class MapRogue {
 		}
 	}
 	
+	public static int getMAX_MAP_CHUNK_X() {
+		return MAX_MAP_CHUNK_X;
+	}
+
+	public static void setMAX_MAP_CHUNK_X(int mAX_MAP_CHUNK_X) {
+		MAX_MAP_CHUNK_X = mAX_MAP_CHUNK_X;
+	}
+
+	public List<EntityBase> getWorldEntities() {
+		return worldEntities;
+	}
+
+	public void addEntity(EntityBase entity) {
+		this.worldEntities.add(entity);
+	}
+	
 	public void update(float delta) {
 
 		inputHandler.handleInput();
 
-		dude.update(delta);
-		
-		
+		for(EntityBase entity : this.worldEntities)
+			entity.update(delta);
 	}
 
 	public int getMapWidth() {
